@@ -12,24 +12,23 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: UserAnswerRepository::class)]
 final class UserAnswer
 {
-    #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private ?Uuid $id = null;
-
-    #[ORM\ManyToOne(inversedBy: 'userAnswers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TestSession $testSession = null;
-
-    #[ORM\ManyToOne(inversedBy: 'userAnswers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Question $question = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Answer $answer = null;
-
+    public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: UuidType::NAME, unique: true)]
+        #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+        #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+        private readonly ?Uuid $id = null,
+        #[ORM\ManyToOne(inversedBy: 'userAnswers')]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?TestSession $testSession = null,
+        #[ORM\ManyToOne(inversedBy: 'userAnswers')]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?Question $question = null,
+        #[ORM\ManyToOne]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?Answer $answer = null,
+    ) {
+    }
     public function getId(): ?Uuid
     {
         return $this->id;

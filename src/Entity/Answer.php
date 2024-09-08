@@ -12,21 +12,21 @@ use Symfony\Component\Uid\Uuid;
 #[ORM\Entity(repositoryClass: AnswerRepository::class)]
 final class Answer
 {
-    #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private ?Uuid $id = null;
-
-    #[ORM\Column(type: 'text')]
-    private ?string $text = null;
-
-    #[ORM\Column(type: 'boolean')]
-    private ?bool $isCorrect = false;
-
-    #[ORM\ManyToOne(inversedBy: 'answers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Question $question = null;
+    public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: UuidType::NAME, unique: true)]
+        #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+        #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+        private ?Uuid $id = null,
+        #[ORM\Column(type: 'text')]
+        private ?string $text = null,
+        #[ORM\Column(type: 'boolean')]
+        private ?bool $isCorrect = false,
+        #[ORM\ManyToOne(inversedBy: 'answers')]
+        #[ORM\JoinColumn(nullable: false)]
+        private ?Question $question = null,
+    ) {
+    }
 
     public function getId(): ?Uuid
     {

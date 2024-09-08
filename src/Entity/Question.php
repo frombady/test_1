@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use AllowDynamicProperties;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,23 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 
-#[ORM\Entity(repositoryClass: QuestionRepository::class)]
+#[AllowDynamicProperties] #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 final class Question
 {
-    #[ORM\Id]
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
-    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-    private ?Uuid $id = null;
-
-    #[ORM\Column(type: 'text')]
-    private ?string $text = null;
-
-    #[ORM\OneToMany(targetEntity: Answer::class, mappedBy: 'question', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private Collection $answers;
-
-    public function __construct()
-    {
+    public function __construct(
+        #[ORM\Column(type: 'text')]
+        private ?string $text,
+        #[ORM\Id]
+        #[ORM\Column(type: UuidType::NAME, unique: true)]
+        #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+        #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
+        private ?Uuid $id = null,
+    ) {
         $this->answers = new ArrayCollection();
     }
 
