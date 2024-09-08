@@ -40,4 +40,12 @@ final class QuestionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findAllShuffled()
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('RANDOM()')
+            ->getQuery()
+            ->getResult();
+    }
 }
