@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\TestSessionRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,14 +21,12 @@ final class TestSession
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-        private readonly ?Uuid $id,
+        private readonly ?Uuid $id = null,
         #[ORM\Column(type: 'datetime')]
-        private ?DateTimeInterface $createdAt,
+        private ?DateTimeInterface $createdAt = new DateTime(),
         #[ORM\OneToMany(targetEntity: UserAnswer::class, mappedBy: 'testSession', cascade: ['persist', 'remove'], orphanRemoval: true)]
-        private Collection $userAnswers,
+        private Collection $userAnswers = new ArrayCollection(),
     ) {
-        $this->userAnswers = new ArrayCollection();
-        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?Uuid
