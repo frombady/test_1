@@ -21,4 +21,9 @@ readonly final class TestSessionService implements TestSessionServiceInterface
 
         return $testSession;
     }
+
+    public function isCorrectAnswer(array $correctAnswerIds, array $userAnswerIds): bool
+    {
+        return true;
+    }
 }

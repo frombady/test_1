@@ -1,0 +1,29 @@
+{# templates/test/start.html.twig #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Test</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Тестирование</h1>
+    <p>Пройдите тест, чтобы проверить свои знания!</p>
+
+    {# Описание теста или инструкции, если нужно #}
+    <div class="instructions">
+        <p>Ответьте на все вопросы, выбрав один или несколько вариантов ответа. Некоторые вопросы могут иметь несколько правильных ответов, и вам нужно выбрать все верные варианты, чтобы получить максимальный результат.</p>
+    </div>
+
+    {# Кнопка для начала теста #}
+    <div class="start-test">
+        <form action="{{ path('test_start') }}" method="POST">
+            <button type="submit" class="btn btn-primary">Начать тест</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

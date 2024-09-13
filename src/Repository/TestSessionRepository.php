@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TestSession[]    findAll()
  * @method TestSession[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class TestSessionRepository extends ServiceEntityRepository
+final class TestSessionRepository extends ServiceEntityRepository implements TestSessionRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

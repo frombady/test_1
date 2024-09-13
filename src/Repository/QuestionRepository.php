@@ -16,7 +16,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Question[]    findAll()
  * @method Question[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class QuestionRepository extends ServiceEntityRepository
+final class QuestionRepository extends ServiceEntityRepository implements QuestionRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -41,7 +41,7 @@ final class QuestionRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllShuffled()
+    public function findAllShuffled(): array
     {
         return $this->createQueryBuilder('q')
             ->orderBy('RANDOM()')

@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Answer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<Answer>
@@ -16,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Answer[]    findAll()
  * @method Answer[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class AnswerRepository extends ServiceEntityRepository
+final class AnswerRepository extends ServiceEntityRepository implements AnswerRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -41,11 +42,17 @@ final class AnswerRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllShuffled()
+    public function findAllShuffled(Uuid $questionId): array
     {
         return $this->createQueryBuilder('a')
+            ->where('a.question', 'question')
             ->orderBy('RANDOM()')
             ->getQuery()
+            ->setParameter('question', $questionId)
             ->getResult();
+    }
+
+    public function findCorrectAnswerIdsByQuestion(Uuid $questionId): array
+    {
     }
 }
