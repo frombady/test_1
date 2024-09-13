@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Questions</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+<div class="container"">
+    <h1>Тестирование</h1>
+
+    {# Форма для отправки ответов на вопросы #}
+    <form action="{{ path('test_answer') }}" method="POST">
+
+        {% for question in questions.question %}
+            <div class="question-block">
+                <h2>Вопрос {{ loop.index }}: {{ question.text }}</h2>
+
+                {# Перебор всех ответов для текущего вопроса #}
+                <div class="answers">
+                    {% for answer in question.answers %}
+                        <div class="answer">
+                            <label>
+                                <input type="checkbox" name="answers[{{ question.id }}][]" value="{{ answer.id }}">
+                                {{ answer.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        {# Кнопка для отправки формы #}
+        <div class="submit-button">
+            <button type="submit" class="btn btn-primary">Отправить ответы</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

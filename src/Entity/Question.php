@@ -52,15 +52,6 @@ final class Question
         return $this->answers;
     }
 
-    public function getAnswersShuffle(): array
-    {
-        $array = $this->answers->toArray();
-
-        shuffle($array);
-
-        return $array;
-    }
-
     public function addAnswer(Answer $answer): self
     {
         if (!$this->answers->contains($answer)) {

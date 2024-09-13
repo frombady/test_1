@@ -45,7 +45,7 @@ final class AnswerRepository extends ServiceEntityRepository implements AnswerRe
     public function findAllShuffled(Uuid $questionId): array
     {
         return $this->createQueryBuilder('a')
-            ->where('a.question', 'question')
+            ->where('a.question = :question')
             ->orderBy('RANDOM()')
             ->getQuery()
             ->setParameter('question', $questionId)

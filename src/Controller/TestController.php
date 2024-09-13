@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Question;
 use App\Repository\AnswerRepository;
 use App\Repository\QuestionRepository;
+use App\Service\QuestionsServiceInterface;
 use App\Service\TestSessionServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,27 +18,35 @@ final class TestController extends AbstractController
 {
     public function __construct(
         private readonly TestSessionServiceInterface $testSessionService,
+        private readonly QuestionsServiceInterface $questionsService,
         private readonly QuestionRepository $questionRepository,
         private readonly AnswerRepository $answerRepository,
     ) {
     }
 
-    #[Route('/', name: 'test_start', methods: Request::METHOD_GET)]
-    public function startTest(): Response
+    #[Route('/', name: 'test_start', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    public function startTest(Request $request): Response
     {
-        $questions = $this->questionRepository->findAllShuffled();
+        //dd($request->getMethod());
+        //dd($request->getMethod() === Request::METHOD_POST);
+        if ($request->getMethod() === Request::METHOD_POST) {
+            return $this->redirectToRoute('test_answer');
+        }
 
-        return $this->render('test/start.html.twig', [
-            'questions' => $questions,
-        ]);
+        return $this->render('test/start.html.twig');
     }
 
+    #[Route('/test', name: 'test_answer', methods: [Request::METHOD_GET, Request::METHOD_POST])]
     public function submitTest(Request $request): Response
     {
-        // Рендерим страницу с результатами теста
-        return $this->render('test/result.html.twig', [
-            'correctAnswers' => $correctAnswers,
-            'incorrectAnswers' => $incorrectAnswers,
+        if ($request->getMethod() === Request::METHOD_POST) {
+
+        }
+
+        /** @var Question $questions */
+        $questions = $this->questionsService->getQuestions();
+        return $this->render('test/test.html.twig', [
+            'questions' => $questions,
         ]);
     }
 }

@@ -23,9 +23,10 @@ readonly final class QuestionsService implements QuestionsServiceInterface
         $questions = $this->em->getRepository(Question::class)->findAllShuffled();
         /** @var Question $question */
         foreach ($questions as $question) {
+            $answers = $this->em->getRepository(Answer::class)->findAllShuffled($question->getId());
             $answerList = [];
             /** @var Answer $answer */
-            foreach ($question->getAnswersShuffle() as $answer) {
+            foreach ($answers as $answer) {
                 $answerList[] = new AnswerDto(
                     id: $answer->getId(),
                     text: $answer->getText(),
