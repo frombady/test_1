@@ -36,17 +36,27 @@ final class TestController extends AbstractController
         return $this->render('test/start.html.twig');
     }
 
-    #[Route('/test', name: 'test_answer', methods: [Request::METHOD_GET, Request::METHOD_POST])]
-    public function submitTest(Request $request): Response
+    #[Route('/test', name: 'test_answer', methods: [Request::METHOD_GET])]
+    public function submitTest(): Response
     {
-        if ($request->getMethod() === Request::METHOD_POST) {
-
-        }
+        $questions = $this->questionsService->getQuestionsShuffled();
 
         /** @var Question $questions */
-        $questions = $this->questionsService->getQuestions();
         return $this->render('test/test.html.twig', [
             'questions' => $questions,
         ]);
+    }
+
+    #[Route('/test', name: 'test_result', methods: [Request::METHOD_POST])]
+    public function resultTest(Request $request)
+    {
+        $questions = $this->questionsService->getQuestions();
+        $answer = [];
+        if ($request->getMethod() === Request::METHOD_POST) {
+            return $this->render('test/result.html.twig', [
+                'questions' => $questions,
+                'answer' => $answer,
+            ]);
+        }
     }
 }

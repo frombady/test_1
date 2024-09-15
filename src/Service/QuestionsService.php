@@ -17,13 +17,39 @@ readonly final class QuestionsService implements QuestionsServiceInterface
         private EntityManagerInterface $em,
     ) {
     }
-    public function getQuestions(): QuestionListDto
+
+    public function getQuestionsShuffled(): QuestionListDto
     {
         $questionListDto = [];
         $questions = $this->em->getRepository(Question::class)->findAllShuffled();
         /** @var Question $question */
         foreach ($questions as $question) {
             $answers = $this->em->getRepository(Answer::class)->findAllShuffled($question->getId());
+            $answerList = [];
+            /** @var Answer $answer */
+            foreach ($answers as $answer) {
+                $answerList[] = new AnswerDto(
+                    id: $answer->getId(),
+                    text: $answer->getText(),
+                );
+            }
+            $questionListDto[] = new QuestionDto(
+                id: $question->getId(),
+                text: $question->getText(),
+                answers: $answerList
+            );
+        }
+
+        return new QuestionListDto($questionListDto);
+    }
+
+    public function getQuestions(): QuestionListDto
+    {
+        $questionListDto = [];
+        $questions = $this->em->getRepository(Question::class)->findAll();
+        /** @var Question $question */
+        foreach ($questions as $question) {
+            $answers = $this->em->getRepository(Answer::class)->findAllByQuestionById($question->getId());
             $answerList = [];
             /** @var Answer $answer */
             foreach ($answers as $answer) {

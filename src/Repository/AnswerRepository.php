@@ -52,6 +52,15 @@ final class AnswerRepository extends ServiceEntityRepository implements AnswerRe
             ->getResult();
     }
 
+    public function findAllByQuestionById(Uuid $questionId): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.question = :question')
+            ->getQuery()
+            ->setParameter('question', $questionId)
+            ->getResult();
+    }
+
     public function findCorrectAnswerIdsByQuestion(Uuid $questionId): array
     {
     }

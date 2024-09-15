@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Questions</title>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+</head>
+<body>
+<div class="container"">
+<h1>Тестирование</h1>
+
+<form action="{{ path('test_answer') }}" method="POST">
+
+    {% for question in questions.question %}
+        <div class="question-block">
+            <h2>Вопрос {{ loop.index }}: {{ question.text }} - правильно</h2>
+
+            <div class="answers">
+                {% for answer in question.answers %}
+                    <div class="answer">
+                        <label>
+                            {{ answer.text }} - верно/не верно
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</form>
+</body>
+</html>

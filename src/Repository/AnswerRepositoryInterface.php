@@ -11,4 +11,6 @@ interface AnswerRepositoryInterface
     public function findCorrectAnswerIdsByQuestion(Uuid $questionId): array;
 
     public function findAllShuffled(Uuid $questionId): array;
+
+    public function findAllByQuestionById(Uuid $questionId): array;
 }
