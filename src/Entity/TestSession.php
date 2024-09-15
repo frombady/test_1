@@ -21,7 +21,7 @@ final class TestSession
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-        private readonly ?Uuid $id = null,
+        private ?Uuid $id = null,
         #[ORM\Column(type: 'datetime')]
         private ?DateTimeInterface $createdAt = new DateTime(),
         #[ORM\OneToMany(targetEntity: UserAnswer::class, mappedBy: 'testSession', cascade: ['persist', 'remove'], orphanRemoval: true)]

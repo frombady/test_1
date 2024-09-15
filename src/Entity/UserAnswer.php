@@ -17,7 +17,7 @@ final class UserAnswer
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-        private readonly ?Uuid $id = null,
+        private ?Uuid $id = null,
         #[ORM\ManyToOne(inversedBy: 'userAnswers')]
         #[ORM\JoinColumn(nullable: false)]
         private ?TestSession $testSession = null,

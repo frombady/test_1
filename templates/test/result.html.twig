@@ -8,19 +8,16 @@
 </head>
 <body>
 <div class="container"">
-<h1>Тестирование</h1>
-
-<form action="{{ path('test_answer') }}" method="POST">
-
+<h1>Результат</h1>
     {% for question in questions.question %}
         <div class="question-block">
-            <h2>Вопрос {{ loop.index }}: {{ question.text }} - правильно</h2>
+            <h2>Вопрос {{ loop.index }}: {{ question.text }}{% if question.isRight == 1 %} - <span style="color: green">Верно</span>{% else %} - <span style="color: red">Не верно</span>{% endif %}</h2>
 
             <div class="answers">
                 {% for answer in question.answers %}
                     <div class="answer">
                         <label>
-                            {{ answer.text }} - верно/не верно
+                            {{ answer.text }} {% if answer.isRight == 1 %} - <span style="color: green">Верно</span>{% endif %} {% if answer.isRight == 0 and answer.isRight is not null %} - <span style="color: red">Не верно</span>{% endif %}
                         </label>
                     </div>
                 {% endfor %}

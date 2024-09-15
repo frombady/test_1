@@ -12,6 +12,7 @@ final class QuestionDto
         private Uuid $id,
         private string $text,
         private array $answers,
+        private ?bool $isRight = null,
     ) {
     }
 
@@ -43,5 +44,15 @@ final class QuestionDto
     public function setAnswers(array $answers): void
     {
         $this->answers = $answers;
+    }
+
+    public function isRight(): ?bool
+    {
+        return $this->isRight;
+    }
+
+    public function setIsRight(?bool $isRight): void
+    {
+        $this->isRight = $isRight;
     }
 }

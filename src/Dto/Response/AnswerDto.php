@@ -11,6 +11,7 @@ final class AnswerDto
     public function __construct(
         private Uuid $id,
         private string $text,
+        private ?bool $isRight = null,
     ) {
     }
 
@@ -32,5 +33,15 @@ final class AnswerDto
     public function setText(string $text): void
     {
         $this->text = $text;
+    }
+
+    public function isRight(): ?bool
+    {
+        return $this->isRight;
+    }
+
+    public function setIsRight(?bool $isRight): void
+    {
+        $this->isRight = $isRight;
     }
 }

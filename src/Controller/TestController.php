@@ -50,12 +50,13 @@ final class TestController extends AbstractController
     #[Route('/test', name: 'test_result', methods: [Request::METHOD_POST])]
     public function resultTest(Request $request)
     {
-        $questions = $this->questionsService->getQuestions();
-        $answer = [];
         if ($request->getMethod() === Request::METHOD_POST) {
+            $session = $this->testSessionService->save($request->get('answers'));
+
+            $questions = $this->questionsService->getQuestions($session);
+            //dd($questions);
             return $this->render('test/result.html.twig', [
                 'questions' => $questions,
-                'answer' => $answer,
             ]);
         }
     }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Answer;
+use App\Entity\Question;
+use App\Entity\TestSession;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Uid\Uuid;
@@ -59,9 +61,5 @@ final class AnswerRepository extends ServiceEntityRepository implements AnswerRe
             ->getQuery()
             ->setParameter('question', $questionId)
             ->getResult();
-    }
-
-    public function findCorrectAnswerIdsByQuestion(Uuid $questionId): array
-    {
     }
 }
