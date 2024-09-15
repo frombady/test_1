@@ -21,3 +21,8 @@ docker exec -it test_1_app bin/console doctrine:fixtures:load
 ```bash
 docker exec -it test_1_app vendor/bin/phpcbf
 ```
+
+## Открыть
+```
+http://localhost:8000/
+```
